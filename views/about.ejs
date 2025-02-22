@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect - About Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * {
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center space-x-4">
+        <img src="/assets/sanlorenzo.jpg" alt="Logo" class="h-16">
+        <span class="text-sm font-bold text-gray-800">BARANGAY <br>SAN LORENZO</span>
+      </div>
+      <!-- Navigation Links -->
+      <ul class="hidden md:flex space-x-8 font-medium text-gray-700 items-center">
+        <li><a href="/index" class="relative hover:text-blue-600 transition" id="home-link">HOME</a></li>
+        <li><a href="/about" class="relative hover:text-blue-600 transition" id="about-link">ABOUT US</a></li>
+        <li><a href="/faq" class="relative hover:text-blue-600 transition" id="faq-link">FAQ</a></li>
+        <li><a href="/contact" class="relative hover:text-blue-600 transition" id="contact-link">CONTACT US</a></li>
+        <i class="fa-solid fa-bell fa-xl"></i>
+        <a href="/profile"><i class="fa-solid fa-user fa-xl"></i></a>
+        <button onclick="window.location.href='/login'">Logout</button>
+      </ul>
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-gray-700 text-2xl">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <ul class="flex flex-col space-y-3 p-4">
+        <li><a href="/home" class="block text-gray-700 hover:text-blue-600">HOME</a></li>
+        <li><a href="/about" class="block text-gray-700 hover:text-blue-600">ABOUT US</a></li>
+        <li><a href="/contact" class="block text-gray-700 hover:text-blue-600">CONTACT US</a></li>
+        <li><a href="/faq" class="block text-gray-700 hover:text-blue-600">FAQ</a></li>
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-user fa-2xl"></i>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Announcements Section -->
+  <div class="container mx-auto p-6 max-w-6xl">
+    <h1 class="text-center text-3xl font-bold mb-8 text-blue-600">Announcements</h1>
+    <div id="announcementsSection" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamic announcements will load here -->
+    </div>
+  </div>
+  
+  <!-- About Us Section -->
+  <div class="max-w-6xl mx-auto mt-10 p-8">
+    <h1 class="text-3xl font-bold text-center text-blue-600">Who We Are</h1>
+    <div class="w-16 h-1 bg-blue-600 mx-auto mt-2"></div>
+    <p class="text-gray-700 mt-4 text-center">
+      Barangay San Lorenzo, located in Gapan City, Nueva Ecija, is a thriving community known for its 
+      strong sense of unity, progressive development, and dedication to public service. As one of the key 
+      barangays in the city, San Lorenzo takes pride in its commitment to fostering a safe, harmonious, 
+      and sustainable environment for its residents.
+      <br><span class="font-semibold">"Isang Barangay, Isang Pamilya, Isang Layunin."</span>
+    </p>
+  </div>
+  
+  <!-- Barangay Officials Section -->
+  <section id="officials" class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-lg border-l-4 border-blue-500">
+    <h2 class="text-3xl font-bold text-blue-600 text-center">Barangay Officials</h2>
+    <div class="w-16 h-1 bg-blue-600 mx-auto mt-2 mb-6"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="p-4 border-l-4 border-gray-300">
+        <h3 class="text-lg font-semibold text-gray-800">Barangay Captain</h3>
+        <p class="text-gray-700">Paul Michael A. Amparado</p>
+      </div>
+      <div class="p-4 border-l-4 border-gray-300">
+        <h3 class="text-lg font-semibold text-gray-800">Barangay Secretary</h3>
+        <p class="text-gray-700">William DS. Tirrado</p>
+      </div>
+      <div class="p-4 border-l-4 border-gray-300">
+        <h3 class="text-lg font-semibold text-gray-800">Barangay Treasurer</h3>
+        <p class="text-gray-700">William DS. Tirrado</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Mission and Vision Section -->
+  <section class="max-w-6xl mx-auto mt-10">
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Mission -->
+      <div class="bg-gradient-to-r from-blue-600 to-blue-400 p-8 rounded-lg shadow-lg text-white">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-bullseye fa-2xl"></i>
+          <h2 class="text-3xl font-bold">Our Mission</h2>
+        </div>
+        <p class="mt-4 text-lg">
+          To provide efficient and responsive barangay governance that ensures the well-being, security, and prosperity 
+          of our constituents through active community participation and sustainable development programs.
+        </p>
+      </div>
+      <!-- Vision -->
+      <div class="bg-gradient-to-r from-green-600 to-green-400 p-8 rounded-lg shadow-lg text-white">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-eye fa-2xl"></i>
+          <h2 class="text-3xl font-bold">Our Vision</h2>
+        </div>
+        <p class="mt-4 text-lg">
+          A progressive and empowered Barangay San Lorenzo that fosters a safe, healthy, and environmentally 
+          sustainable community where all residents thrive.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 Doconnect. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById("menu-btn");
+    menuBtn.addEventListener("click", function() {
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    // Load dynamic announcements from localStorage
+    document.addEventListener('DOMContentLoaded', loadAnnouncements);
+
+    function loadAnnouncements() {
+      const section = document.getElementById('announcementsSection');
+      section.innerHTML = '';
+
+      let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+      announcements.forEach(({ title, description, image }) => {
+        section.innerHTML += `
+          <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-blue-500">
+            <img src="${image}" class="w-full h-48 object-cover" alt="${title}">
+            <h2 class="text-lg font-semibold text-gray-700">${title}</h2>
+            <p class="text-gray-600 mt-2">${description}</p>
+          </div>
+        `;
+      });
+    }
+  </script>
+</body>
+</html>

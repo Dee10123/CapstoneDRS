@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doconnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    *{
+        font-family: 'Montserrat', sans-serif;
+    }
+    .closed {
+    transform: translateX(-100%);
+}
+
+main {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+
+</style>
+<body class="flex bg-gray-100 h-screen">
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+        <div class="p-6 text-center">
+            <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+            <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+        </div>
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+            <a href="accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+            <a href="announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+            <a href="documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+            <a href="request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+            <a href="messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+            <a href="history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+            <a href="payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+            <a href="admin" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+        </nav>
+    </aside>
+    
+    <!-- Toggle Button -->
+    <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">☰</button>
+    
+  
+<!-- Main Content -->
+<main class="ml-64 p-6 flex-1">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold mb-4">Messages & Ratings</h1>
+        <div class="flex items-center space-x-4">
+            <input type="text" id="messageSearchInput" placeholder="Search messages..." class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button class="relative text-gray-600 hover:text-gray-800">
+                <i class="fas fa-bell text-2xl"></i>
+                <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full">5</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+        <h2 class="text-lg font-semibold mb-2">📨 Messages</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300" id="messagesTable">
+                <thead>
+                    <tr class="bg-blue-500 text-white">
+                        <th class="border border-gray-300 px-4 py-2">Name</th>
+                        <th class="border border-gray-300 px-4 py-2">Email</th>
+                        <th class="border border-gray-300 px-4 py-2">Subject</th>
+                        <th class="border border-gray-300 px-4 py-2">Message</th>
+                        <th class="border border-gray-300 px-4 py-2">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="messagesBody">
+                    <!-- Data will be inserted dynamically here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Ratings Table -->
+    <div class="bg-white p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-semibold mb-2">⭐ Ratings</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-green-500 text-white">
+                        <th class="border border-gray-300 px-4 py-2">User</th>
+                        <th class="border border-gray-300 px-4 py-2">Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td class="border border-gray-300 px-4 py-2">Ace Padilla</td>
+                        <td class="border border-gray-300 px-4 py-2">⭐⭐⭐⭐⭐ (5)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+    
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const mainContent = document.querySelector('main');
+    
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('closed');
+    
+        if (sidebar.classList.contains('closed')) {
+            mainContent.classList.remove('ml-64');
+            mainContent.classList.add('ml-0');
+        } else {
+            mainContent.classList.remove('ml-0');
+            mainContent.classList.add('ml-64');
+        }
+    });
+    function replyEmail(email) {
+        window.location.href = `mailto:${email}`;
+    }
+
+    async function fetchMessages() {
+        try {
+            const response = await fetch('http://localhost:3000/api/messages');
+            const messages = await response.json();
+
+            const tableBody = document.getElementById('messagesBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            messages.forEach(message => {
+                const row = document.createElement('tr');
+                row.classList.add('text-center');
+                row.setAttribute('data-id', message._id); // Add the message ID as a data attribute
+
+                row.innerHTML = `
+                    <td class="border border-gray-300 px-4 py-2">${message.name}</td>
+                    <td class="border border-gray-300 px-4 py-2">${message.email}</td>
+                    <td class="border border-gray-300 px-4 py-2">${message.subject}</td>
+                    <td class="border border-gray-300 px-4 py-2">${message.message}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <button class="bg-green-500 text-white px-3 py-1 rounded" onclick="replyEmail('${message.email}')">Reply</button>
+                        <button class="bg-red-500 text-white px-3 py-1 rounded mt-2" onclick="deleteMessage('${message._id}')">Delete</button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row); // Append the new row to the table body
+            });
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    }
+
+    // Function to delete a message
+    async function deleteMessage(messageId) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/messages/${messageId}`, {
+                method: 'DELETE', // Use DELETE method
+            });
+
+            if (response.ok) {
+                // Remove the row from the table
+                const row = document.querySelector(`tr[data-id="${messageId}"]`);
+                row.remove();
+                alert('Message deleted successfully!');
+            } else {
+                alert('Error deleting message');
+            }
+        } catch (error) {
+            console.error('Error deleting message:', error);
+        }
+    }
+
+    // Call the fetchMessages function when the page loads
+    window.onload = fetchMessages;
+
+    </script>
+   
+</body>
+</html>

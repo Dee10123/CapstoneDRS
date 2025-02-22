@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doconnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    *{
+        font-family: 'Montserrat', sans-serif;
+    }
+    .closed {
+    transform: translateX(-100%);
+}
+
+main {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+
+</style>
+<body class="flex bg-gray-100 h-screen">
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+        <div class="p-6 text-center">
+            <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+            <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+        </div>
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+            <a href="accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+            <a href="announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+            <a href="documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+            <a href="request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+            <a href="messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+            <a href="history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+            <a href="payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+            <a href="admin" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+        </nav>
+    </aside>
+    
+    <!-- Toggle Button -->
+    <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">☰</button>
+    
+  
+    <main class="ml-64 flex-1 p-6">
+        <h2 class="text-2xl font-bold mb-6">📄 Upload and View Documents</h2>
+        
+        <!-- Upload Section -->
+        <div class="bg-white shadow-lg p-6 rounded-lg">
+            <label for="documentName" class="font-semibold">Document Name</label>
+            <input type="text" id="documentName" class="border p-2 w-full rounded-md mb-4" placeholder="Enter document name">
+
+            <label for="fileInput" class="font-semibold">Upload File</label>
+            <input type="file" id="fileInput" class="border p-2 w-full rounded-md mb-4" accept=".pdf, .docx">
+
+            <button onclick="handleFileUpload()" class="bg-blue-600 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 transition">📤 Upload</button>
+        </div>
+        
+        <!-- Document Preview -->
+        <div id="viewerContainer" class="mt-6 bg-white p-6 shadow-lg rounded-lg">
+            <h3 class="text-lg font-semibold">📂 Document Preview</h3>
+            <canvas id="pdfViewer" class="border rounded-md mt-2 hidden"></canvas>
+            <div id="docxViewer" class="border p-4 rounded-md mt-2 hidden"></div>
+        </div>
+    </main>
+        
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const mainContent = document.querySelector('main');
+    
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('closed');
+    
+        if (sidebar.classList.contains('closed')) {
+            mainContent.classList.remove('ml-64');
+            mainContent.classList.add('ml-0');
+        } else {
+            mainContent.classList.remove('ml-0');
+            mainContent.classList.add('ml-64');
+        }
+    });
+    
+    </script>
+    <script>
+        let documents = [];
+
+        function addDocument() {
+            const name = document.getElementById('documentName').value;
+            if (name) {
+                documents.push(name);
+                document.getElementById('documentName').value = '';
+                renderDocuments();
+                Swal.fire('Added!', 'Document type added successfully.', 'success');
+            }
+        }
+        
+        function editDocument(index) {
+            const newName = prompt("Edit document name:", documents[index]);
+            if (newName) {
+                documents[index] = newName;
+                renderDocuments();
+            }
+        }
+        
+        function deleteDocument(index) {
+            documents.splice(index, 1);
+            renderDocuments();
+        }
+        
+        function renderDocuments() {
+            const list = document.getElementById('documentList');
+            list.innerHTML = '';
+            documents.forEach((doc, index) => {
+                list.innerHTML += `<li class="flex justify-between p-2 border rounded-md">
+                    <span>${doc}</span>
+                    <div>
+                        <button onclick="editDocument(${index})" class="text-blue-600 mr-2">✏️ Edit</button>
+                        <button onclick="deleteDocument(${index})" class="text-red-600">❌ Delete</button>
+                    </div>
+                </li>`;
+            });
+        }
+    </script>
+    <script>
+        function handleFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please select a file.");
+                return;
+            }
+
+            const reader = new FileReader();
+
+            if (file.type === "application/pdf") {
+                reader.onload = function (event) {
+                    displayPDF(event.target.result);
+                };
+                reader.readAsArrayBuffer(file);
+            } else if (file.name.endsWith(".docx")) {
+                reader.onload = function (event) {
+                    displayDOCX(event.target.result);
+                };
+                reader.readAsArrayBuffer(file);
+            } else {
+                alert("Invalid file type. Only PDF and DOCX are supported.");
+            }
+        }
+
+        function displayPDF(data) {
+            const pdfViewer = document.getElementById("pdfViewer");
+            const docxViewer = document.getElementById("docxViewer");
+            docxViewer.classList.add("hidden");
+            pdfViewer.classList.remove("hidden");
+
+            const loadingTask = pdfjsLib.getDocument({ data });
+            loadingTask.promise.then(pdf => {
+                pdf.getPage(1).then(page => {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale });
+                    const canvas = pdfViewer;
+                    const context = canvas.getContext('2d');
+
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    page.render({ canvasContext: context, viewport });
+                });
+            });
+        }
+
+        function displayDOCX(data) {
+            const docxViewer = document.getElementById("docxViewer");
+            const pdfViewer = document.getElementById("pdfViewer");
+            pdfViewer.classList.add("hidden");
+            docxViewer.classList.remove("hidden");
+
+            mammoth.extractRawText({ arrayBuffer: data })
+                .then(result => {
+                    docxViewer.innerHTML = result.value;
+                })
+                .catch(error => console.log(error));
+        }
+    </script>
+      <script>
+        function handleFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const docName = document.getElementById('documentName').value.trim();
+
+            if (!file || !docName) {
+                Swal.fire('Error', 'Please enter a document name and select a file.', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            if (file.type === "application/pdf") {
+                reader.onload = function (event) {
+                    displayPDF(event.target.result);
+                };
+                reader.readAsArrayBuffer(file);
+            } else if (file.name.endsWith(".docx")) {
+                reader.onload = function (event) {
+                    displayDOCX(event.target.result);
+                };
+                reader.readAsArrayBuffer(file);
+            } else {
+                Swal.fire('Error', 'Invalid file type. Only PDF and DOCX are supported.', 'error');
+            }
+        }
+
+        function displayPDF(data) {
+            document.getElementById("docxViewer").classList.add("hidden");
+            const pdfViewer = document.getElementById("pdfViewer");
+            pdfViewer.classList.remove("hidden");
+            
+            pdfjsLib.getDocument({ data }).promise.then(pdf => {
+                pdf.getPage(1).then(page => {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale });
+                    const canvas = pdfViewer;
+                    const context = canvas.getContext('2d');
+                    
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    page.render({ canvasContext: context, viewport });
+                });
+            });
+        }
+
+        function displayDOCX(data) {
+            document.getElementById("pdfViewer").classList.add("hidden");
+            const docxViewer = document.getElementById("docxViewer");
+            docxViewer.classList.remove("hidden");
+            
+            mammoth.extractRawText({ arrayBuffer: data }).then(result => {
+                docxViewer.innerHTML = result.value;
+            }).catch(error => console.log(error));
+        }
+    </script>
+    </html>

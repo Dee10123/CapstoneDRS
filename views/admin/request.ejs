@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect - Requests</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      font-family: 'Montserrat', sans-serif;
+    }
+    .closed {
+      transform: translateX(-100%);
+    }
+    main {
+      transition: margin-left 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col">
+  
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+    <div class="p-6 text-center">
+      <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+      <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+    </div>
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 space-y-2">
+      <a href="/dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+      <a href="/accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+      <a href="/announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+      <a href="/documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+      <a href="/request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+      <a href="/messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+      <a href="/history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+      <a href="/payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+      <a href="/login" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+    </nav>
+  </aside>
+  
+  <!-- Toggle Button -->
+  <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">
+    ☰
+  </button>
+  
+  <!-- Requests Page -->
+  <main class="ml-64 flex-1 p-6 overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-semibold">Document Requests</h1>
+      <div class="flex items-center space-x-4">
+        <input type="text" id="documentSearchInput" placeholder="Search..." class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button class="relative text-gray-600 hover:text-gray-800">
+          <i class="fas fa-bell text-2xl"></i>
+          <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full">3</span>
+        </button>
+      </div>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-blue-700 text-white">
+            <th class="p-3 border border-gray-300">Request ID</th>
+            <th class="p-3 border border-gray-300">Requester</th>
+            <th class="p-3 border border-gray-300">Documents</th>
+            <th class="p-3 border border-gray-300">Request Date & Time</th>
+            <th class="p-3 border border-gray-300">Status</th>
+            <th class="p-3 border border-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="requestsTable">
+          <% if (requests && requests.length) { %>
+            <% requests.forEach(function(request) { %>
+              <% if (request.status !== "Rejected") { %> <!-- Hide rejected requests -->
+                <tr class="border border-gray-300" data-id="<%= request._id %>">
+                  <td class="p-3 border border-gray-300 text-center"><%= request._id %></td>
+                  <td class="p-3 border border-gray-300 text-center"><%= request.firstname %> <%= request.lastname %></td>
+                  <td class="p-3 border border-gray-300 text-center">
+                    <%= Array.isArray(request.documentType) ? request.documentType.join(', ') : '' %> <!-- Changed to documentType -->
+                  </td>
+                  <td class="p-3 border border-gray-300 text-center">
+                    <%= new Date(request.dateRequested).toLocaleString() %>
+                  </td>
+                  <td class="p-3 border border-gray-300 text-center">
+                    <span class="px-2 py-1 rounded text-white 
+                      <%= request.status === 'Approved' ? 'bg-green-500' : 
+                          request.status === 'Rejected' ? 'bg-red-500' : 
+                          'bg-yellow-500' %>">
+                      <%= request.status %>
+                    </span>
+                  </td>
+                  
+                  <td class="p-3 border border-gray-300 text-center">
+                    <button class="approve-btn bg-green-500 text-white px-3 py-1 rounded m-1 hover:bg-green-600">Approve</button>
+                    <button onclick="showAlert('view', '<%= request._id %>')" class="bg-blue-500 text-white px-3 py-1 rounded m-1 hover:bg-blue-600">View</button>
+                    <button class="reject-btn bg-red-500 text-white px-3 py-1 rounded m-1 hover:bg-red-600">Reject</button>
+                  </td>
+                  
+                </tr>
+              <% } %>
+            <% }); %>
+          <% } else { %>
+            <tr>
+              <td colspan="6" class="p-3 text-center text-gray-600">No pending requests found.</td>
+            </tr>
+          <% } %>
+        </tbody>
+        
+          
+      </table>
+    </div>
+  </main>
+  
+  <!-- Request Form -->
+  <div id="requestForm" class="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-10 border-t-4 border-blue-500 hidden">
+    <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">Select Document Type</h2>
+    <form>
+      <div class="space-y-4">
+        <label class="flex items-center space-x-3 bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all shadow-sm border border-gray-200">
+          <input type="checkbox" name="document" value="Barangay Clearance" class="form-checkbox text-blue-500">
+          <span class="text-gray-800 font-medium">Barangay Clearance</span>
+        </label>
+        <label class="flex items-center space-x-3 bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all shadow-sm border border-gray-200">
+          <input type="checkbox" name="document" value="Certificate of Residency" class="form-checkbox text-blue-500">
+          <span class="text-gray-800 font-medium">Certificate of Residency</span>
+        </label>
+        <label class="flex items-center space-x-3 bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all shadow-sm border border-gray-200">
+          <input type="checkbox" name="document" value="Indigency Certificate" class="form-checkbox text-blue-500">
+          <span class="text-gray-800 font-medium">Indigency Certificate</span>
+        </label>
+      </div>
+      <button id="requestButton" type="button" class="mt-6 w-full bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-all">
+        Request Document
+      </button>
+    </form>
+  </div>
+  
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h2 class="text-lg font-bold">Are you sure you want to request these documents?</h2>
+      <ul id="documentList" class="mt-2 list-disc list-inside text-gray-700">
+        <!-- Document list will be inserted here -->
+      </ul>
+      <div class="flex justify-end mt-4">
+        <button id="cancelBtn" class="px-4 py-2 bg-gray-300 rounded-lg mr-2">Cancel</button>
+        <button id="confirmBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Okay</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center p-4">
+    <p>&copy; 2025 Doconnect. All rights reserved.</p>
+  </footer>
+  
+  <!-- Embed logged-in user data from the server -->
+  <script>
+    const loggedInUser = <%- JSON.stringify(user) %>;
+    console.log("Logged in user:", loggedInUser);
+  </script>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // Reject Button Event Listener
+    document.querySelectorAll('.reject-btn').forEach(button => {
+      button.addEventListener('click', async (event) => {
+        const requestId = event.target.getAttribute('data-id');
+          
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Do you really want to reject this request?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, reject it!',
+          cancelButtonText: 'Cancel'
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const response = await fetch(`/request/reject/${requestId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' }
+              });
+  
+              const data = await response.json();
+  
+              if (response.ok) {
+                Swal.fire({
+                  title: 'Rejected!',
+                  text: data.message,
+                  icon: 'success',
+                  timer: 1500,
+                  showConfirmButton: false
+                });
+  
+                // Remove rejected request from the table
+                const requestRow = event.target.closest('tr');
+                if (requestRow) {
+                  requestRow.remove();
+                }
+  
+              } else {
+                Swal.fire('Error', data.message, 'error');
+              }
+  
+            } catch (error) {
+              console.error('Error rejecting request:', error);
+              Swal.fire('Error', 'Failed to reject the request.', 'error');
+            }
+          }
+        });
+      });
+    });
+  
+  // Approve Button Event Listener
+  document.querySelectorAll('.approve-btn').forEach(button => {
+  button.addEventListener('click', async (event) => {
+    const requestId = event.target.getAttribute('data-id');
+    console.log("Request ID:", requestId); // Log requestId for debugging
+
+    if (!requestId) {
+      console.error("No requestId found for this button.");
+      Swal.fire('Error', 'Request ID is missing.', 'error');
+      return;
+    }
+
+    // Show confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to approve this request?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, approve it!',
+      cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Send a PUT request to the correct server endpoint
+          const response = await fetch(`/request/approve/${requestId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }
+          });
+
+          const data = await response.json(); // Parse response
+
+          if (response.ok) {
+            // Success: Show confirmation message
+            Swal.fire({
+              title: 'Approved!',
+              text: data.message || 'Request has been approved successfully.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+
+            // Update the request status in the table
+            const requestRow = event.target.closest('tr');
+            if (requestRow) {
+              const statusCell = requestRow.querySelector('td:nth-child(5)'); // Update status cell (adjust column index if needed)
+              if (statusCell) {
+                statusCell.innerHTML = `<span class="px-2 py-1 rounded text-white bg-green-500">Approved</span>`;
+              }
+            }
+
+          } else {
+            // Failure: Show error message
+            Swal.fire('Error', data.message || 'Failed to approve the request.', 'error');
+          }
+
+        } catch (error) {
+          console.error('Error approving request:', error);
+          Swal.fire('Error', 'Failed to approve the request.', 'error');
+        }
+      }
+    });
+  });
+});
+
+
+  </script>
+  
+  
+  
+  
+
+
+</body>
+</html>

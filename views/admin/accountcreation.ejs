@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect - Residents List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { font-family: 'Montserrat', sans-serif; }
+    .closed { transform: translateX(-100%); }
+    main { transition: margin-left 0.3s ease-in-out; }
+  </style>
+</head>
+<body class="flex bg-gray-100 h-screen">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+    <div class="p-6 text-center">
+      <img src="/assest/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+      <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+    </div>
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 space-y-2">
+      <a href="/dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+      <a href="/accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+      <a href="/announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+      <a href="/documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+      <a href="/request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+      <a href="/messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+      <a href="/history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+      <a href="/payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+      <a href="/logout" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+    </nav>
+  </aside>
+  
+  <!-- Toggle Button -->
+  <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">☰</button>
+  
+  <!-- Main Content -->
+  <main class="ml-64 flex-1 p-6 overflow-y-auto">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold text-gray-800">Residents List</h2>
+        <div class="flex items-center space-x-4">
+          <input type="text" id="residentSearchInput" placeholder="Search..." class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button class="relative text-gray-600 hover:text-gray-800">
+            <i class="fas fa-bell text-2xl"></i>
+            <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full">5</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="p-3 border">First Name</th>
+              <th class="p-3 border">Last Name</th>
+              <th class="p-3 border">Age</th>
+              <th class="p-3 border">Birthdate</th>
+              <th class="p-3 border">Address</th>
+              <th class="p-3 border">Contact</th>
+              <th class="p-3 border">Email</th>
+              <th class="p-3 border text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="residentTableBody" class="text-gray-700">
+            <% users.forEach(function(user) { %>
+              <tr class="hover:bg-gray-100">
+                <td class="p-3 border"><%= user.firstname %></td>
+                <td class="p-3 border"><%= user.lastname %></td>
+                <td class="p-3 border"><%= user.age %></td>
+                <td class="p-3 border"><%= new Date(user.birthday).toISOString().split('T')[0] %></td>
+                <td class="p-3 border"><%= user.address %></td>
+                <td class="p-3 border"><%= user.mobile %></td>
+                <td class="p-3 border"><%= user.email %></td>
+                <td class="p-3 border text-center">
+                  
+                  <button class="deleteBtn bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700" data-id="<%= user._id %>">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>                  
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Edit Resident Modal -->
+  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h2 class="text-xl font-semibold mb-4">Edit Resident</h2>
+      <input type="text" id="editFirstName" class="w-full p-2 border rounded mb-2" placeholder="First Name">
+      <input type="text" id="editLastName" class="w-full p-2 border rounded mb-2" placeholder="Last Name">
+      <input type="number" id="editAge" class="w-full p-2 border rounded mb-2" placeholder="Age">
+      <input type="date" id="editBirthday" class="w-full p-2 border rounded mb-2">
+      <input type="text" id="editAddress" class="w-full p-2 border rounded mb-2" placeholder="Address">
+      <input type="text" id="editContact" class="w-full p-2 border rounded mb-2" placeholder="Contact Number">
+      <input type="email" id="editEmail" class="w-full p-2 border rounded mb-2" placeholder="Email">
+      <div class="flex justify-end space-x-2">
+        <button id="saveChanges" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+        <button id="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script>
+    document.querySelectorAll('.deleteBtn').forEach(button => {
+      button.addEventListener('click', function () {
+        const userId = this.getAttribute('data-id'); // Get user ID
+        const row = this.closest('tr');
+  
+        Swal.fire({
+          title: "Are you sure?",
+          text: "This action cannot be undone!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            fetch(`/delete-resident/${userId}`, {
+              method: 'DELETE',
+              headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                Swal.fire("Deleted!", "User has been removed.", "success");
+                row.remove(); // Remove row from table
+              } else {
+                Swal.fire("Error!", "Something went wrong.", "error");
+              }
+            })
+            .catch(error => {
+              console.error("Error deleting user:", error);
+              Swal.fire("Error!", "Server error occurred.", "error");
+            });
+          }
+        });
+      });
+    });
+  </script>
+  
+</body>
+</html>

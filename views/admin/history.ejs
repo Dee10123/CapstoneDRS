@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doconnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="flex bg-gray-100 h-screen">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+        <div class="p-6 text-center">
+            <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+            <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+            <a href="accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+            <a href="announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+            <a href="documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+            <a href="request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+            <a href="messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+            <a href="history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+            <a href="payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+            <a href="admin" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+          </nav>
+    </aside>
+
+    <!-- Toggle Button -->
+    <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">☰</button>
+
+    <!-- Main Content -->
+    <main class="ml-64 p-6 flex-1">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold">📜 Request History</h2>
+            <input type="text" id="historySearchInput" placeholder="Search history..." class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- History Table -->
+        <div class="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-blue-700 text-white">
+                        <th class="p-3 border">Requestor</th>
+                        <th class="p-3 border">Date Requested</th>
+                        <th class="p-3 border">Document Type</th>
+                        <th class="p-3 border">Purpose</th> <!-- New Column -->
+                        <th class="p-3 border">Status</th>
+                    </tr>
+                </thead>
+                
+                <tbody id="historyTableBody">
+                    <!-- Dynamic data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const mainContent = document.querySelector('main');
+
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('closed');
+        mainContent.classList.toggle('ml-64');
+        mainContent.classList.toggle('ml-0');
+    });
+
+    // Fetch and display approved and rejected requests
+    async function fetchRequestHistory() {
+    try {
+        const response = await fetch('http://localhost:3000/api/requestHistory'); // Ensure this URL matches your backend
+        const requests = await response.json();
+
+        const tableBody = document.getElementById('historyTableBody');
+        tableBody.innerHTML = '';
+
+        requests.forEach(({ firstname, lastname, dateRequested, documentType, purpose, status }) => {
+            const row = document.createElement('tr');
+            row.className = 'bg-gray-100';
+
+            row.innerHTML = `
+                <td class="p-3 border">${firstname} ${lastname}</td>
+                <td class="p-3 border">${new Date(dateRequested).toLocaleDateString()}</td>
+                <td class="p-3 border">${documentType.join(', ')}</td>
+                <td class="p-3 border">${purpose}</td>
+                <td class="p-3 border">
+                    <span class="${status === 'Approved' ? 'bg-green-500' : status === 'Rejected' ? 'bg-red-500' : 'bg-yellow-500'} text-white px-2 py-1 rounded">${status}</span>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching request history:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchRequestHistory);
+
+</script>
+</body>
+</html>
