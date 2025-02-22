@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    *{
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center space-x-4">
+        <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="h-16">
+        <span class="text-sm font-bold text-gray-800">BARANGAY <br>SAN LORENZO</span>
+      </div>
+      <!-- Navigation Links -->
+      <ul class="hidden md:flex space-x-8 font-medium text-gray-700 items-center">
+        <li><a href="index" class="relative hover:text-blue-600 transition" id="home-link">HOME</a></li>
+        <li><a href="about" class="relative hover:text-blue-600 transition" id="about-link">ABOUT US</a></li>
+        <li><a href="faq" class="relative hover:text-blue-600 transition" id="faq-link">FAQ</a></li>
+        <li><a href="contact" class="relative hover:text-blue-600 transition" id="contact-link">CONTACT US</a></li>
+        <i class="fa-solid fa-bell fa-xl"></i>
+        <a href="profile"><i class="fa-solid fa-user fa-xl"></i></a>
+        <button onclick="window.location.href='/login'">Logout</button>
+      </ul>
+  
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-gray-700 text-2xl">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="max-w-5xl mx-auto px-6 py-16">
+    <h1 class="text-blue-700 text-center text-4xl font-bold mb-10">Get in Touch</h1>
+  
+    <div class="flex flex-col lg:flex-row items-center lg:justify-center gap-12 bg-white p-10 rounded-2xl shadow-lg">
+      <div class="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left lg:items-start">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d962.0428890226052!2d120.95233316952387!3d15.312909192572056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x339721a57fb8c8d5%3A0x1af3c845bca15d8f!2sSan%20Lorenzo%20Barangay%20Hall!5e0!3m2!1sen!2sph!4v1739364501110!5m2!1sen!2sph" 
+          width="100%" height="280" class="rounded-lg shadow-md" 
+          style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+  
+        <div class="mt-6 space-y-4 text-gray-800">
+          <p class="flex items-center text-sm">
+            <i class="fa-solid fa-location-dot text-blue-700 text-lg mr-3"></i> Gapan East Central School, 244 Bonifacio St, Gapan City, 3105 Nueva Ecija
+          </p>
+          <p class="flex items-center text-sm">
+            <i class="fa-solid fa-phone text-blue-700 text-lg mr-3"></i> 09668745829
+          </p>
+          <p class="flex items-center text-sm">
+            <i class="fa-solid fa-envelope text-blue-700 text-lg mr-3"></i> sanlorenzobarangay1@gmail.com
+          </p>
+        </div>
+      </div>
+  
+      <form id="contactForm" class="w-full lg:w-1/2 flex flex-col bg-gray-50 p-6 rounded-2xl shadow-md">
+        <h2 class="text-center text-lg font-semibold text-gray-800 tracking-widest mb-4">SEND US A MESSAGE</h2>
+  
+        <input type="text" name="name" placeholder="Name" 
+          class="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-700 transition mb-4" required>
+        
+        <input type="email" name="email" placeholder="Email" 
+          class="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-700 transition mb-4" required>
+        
+        <input type="text" name="subject" placeholder="Subject" 
+          class="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-700 transition mb-4">
+        
+        <textarea name="message" placeholder="Message" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-700 transition h-28 mb-4 resize-none" required></textarea>
+  
+        <button type="submit" class="w-full bg-blue-700 text-white py-3 rounded-lg border-b-4 border-blue-800
+          transition-all hover:brightness-110 hover:-translate-y-1 hover:border-b-[6px] 
+          active:border-b-2 active:brightness-90 active:translate-y-1">
+          SUBMIT
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 Doconnect. All rights reserved.</p>
+  </footer>
+  
+  <script>
+  document.getElementById("contactForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  // Collect form data
+  const formData = {
+    name: document.querySelector('input[name="name"]').value,
+    email: document.querySelector('input[name="email"]').value,
+    subject: document.querySelector('input[name="subject"]').value,
+    message: document.querySelector('textarea[name="message"]').value
+  };
+
+  try {
+    // Send data to the backend
+    const response = await fetch('http://localhost:3000/send-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    // Handle success or failure based on the response
+    if (response.ok) {
+      Swal.fire({
+        title: "Thank you!",
+        text: data.message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+      }).then(() => {
+        // Reset the form after successful submission
+        document.getElementById("contactForm").reset();
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: data.message,
+        icon: "error",
+        confirmButtonColor: "#d33",
+        confirmButtonText: "OK"
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      title: "Error",
+      text: "An error occurred while sending your message.",
+      icon: "error",
+      confirmButtonColor: "#d33",
+      confirmButtonText: "OK"
+    });
+  }
+});
+
+  </script>
+</body>
+</html>

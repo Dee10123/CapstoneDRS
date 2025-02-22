@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * { font-family: 'Montserrat', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="/assets/sanlorenzo.jpg" alt="Logo" class="h-16">
+
+
+        <span class="text-sm font-bold text-gray-800">BARANGAY <br>SAN LORENZO</span>
+      </div>
+      <ul class="hidden md:flex space-x-8 font-medium text-gray-700 items-center">
+        <li><a href="/index" class="relative hover:text-blue-600 transition" id="home-link">HOME</a></li>
+        <li><a href="/about" class="relative hover:text-blue-600 transition" id="about-link">ABOUT US</a></li>
+        <li><a href="/faq" class="relative hover:text-blue-600 transition" id="faq-link">FAQ</a></li>
+        <li><a href="/contact" class="relative hover:text-blue-600 transition" id="contact-link">CONTACT US</a></li>
+        <i class="fa-solid fa-bell fa-xl"></i>
+        <a href="/profile"><i class="fa-solid fa-user fa-xl"></i></a>
+        <button onclick="window.location.href='/login'">Logout</button>
+      </ul>
+      <button id="menu-btn" class="md:hidden text-gray-700 text-2xl">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <ul class="flex flex-col space-y-3 p-4">
+        <li><a href="/home" class="block text-gray-700 hover:text-blue-600">HOME</a></li>
+        <li><a href="/about" class="block text-gray-700 hover:text-blue-600">ABOUT US</a></li>
+        <li><a href="/contact" class="block text-gray-700 hover:text-blue-600">CONTACT US</a></li>
+        <li><a href="/faq" class="block text-gray-700 hover:text-blue-600">FAQ</a></li>
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-user fa-2xl"></i>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-evenly items-center">
+    <img src="../../assets/sanlorenzo.jpg" alt="Barangay Image" class="w-96 h-auto mb-6 rounded-full">
+    <div class="max-w-2xl">
+      <h1 class="text-3xl font-bold text-gray-800 mb-4">REQUEST BARANGAY <br>DOCUMENTS WITH EASE</h1>
+      <p class="text-gray-600 text-lg">Request your Barangay Records <br>from San Lorenzo Gapan City <b>Online.</b></p>
+      <button id="scrollButton" class="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
+        <span>Request Now</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Steps Section -->
+  <div class="p-6 rounded-lg shadow-lg max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold text-white mb-6 text-center">
+      <span class="text-blue-500 text-5xl">3  </span><span class="text-gray-700">EASY STEPS TO CREATE A REQUEST</span> 
+      <span class="ml-2 text-yellow-400">&#128161;</span>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Step 1 -->
+      <div class="bg-blue-600 p-6 rounded-lg flex flex-col items-center text-center h-72 w-full">
+        <div class="mb-4 bg-yellow-400 p-2 rounded-full w-20 h-20 flex items-center justify-center">
+          <i class="fas fa-pen text-3xl text-gray-700"></i>
+        </div>
+        <h3 class="text-white text-xl font-semibold">Step #1</h3>
+        <p class="text-white text-lg mt-2">Click the "Request Now" button</p>
+      </div>
+      <!-- Step 2 -->
+      <div class="bg-blue-600 p-6 rounded-lg flex flex-col items-center text-center h-72 w-full">
+        <div class="mb-4 bg-yellow-400 p-2 rounded-full w-20 h-20 flex items-center justify-center">
+          <i class="fas fa-file-alt text-3xl text-gray-700"></i>
+        </div>
+        <h3 class="text-white text-xl font-semibold">Step #2</h3>
+        <p class="text-white text-lg mt-2">Select document type and fill out the request form</p>
+      </div>
+      <!-- Step 3 -->
+      <div class="bg-blue-600 p-6 rounded-lg flex flex-col items-center text-center h-72 w-full">
+        <div class="mb-4 bg-yellow-400 p-2 rounded-full w-20 h-20 flex items-center justify-center">
+          <i class="fas fa-bell text-3xl text-gray-700"></i>
+        </div>
+        <h3 class="text-white text-xl font-semibold">Step #3</h3>
+        <p class="text-white text-lg mt-2">You will be notified via email or message once your documents are ready for pickup</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Request Form -->
+  <div id="requestForm" class="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-10 border-t-4 border-blue-500 hidden">
+    <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">Select Document Type</h2>
+    <form>
+      <div class="space-y-4">
+        <label class="flex items-center space-x-3 bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all shadow-sm border border-gray-200">
+          <input type="checkbox" name="document" value="Barangay Clearance" class="form-checkbox text-blue-500">
+          <span class="text-gray-800 font-medium">Barangay Clearance</span>
+        </label>
+        <label class="flex items-center space-x-3 bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all shadow-sm border border-gray-200">
+          <input type="checkbox" name="document" value="Certificate of Residency" class="form-checkbox text-blue-500">
+          <span class="text-gray-800 font-medium">Certificate of Residency</span>
+        </label>
+        <label class="flex items-center space-x-3 bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all shadow-sm border border-gray-200">
+          <input type="checkbox" name="document" value="Indigency Certificate" class="form-checkbox text-blue-500">
+          <span class="text-gray-800 font-medium">Indigency Certificate</span>
+        </label>
+      </div>
+      <button id="requestButton" type="button" class="mt-6 w-full bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-all">
+        Request Document
+      </button>
+    </form>
+  </div>
+  
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h2 class="text-lg font-bold">Are you sure you want to request these documents?</h2>
+      <ul id="documentList" class="mt-2 list-disc list-inside text-gray-700">
+        <!-- Document list will be inserted here -->
+      </ul>
+      <div class="flex justify-end mt-4">
+        <button id="cancelBtn" class="px-4 py-2 bg-gray-300 rounded-lg mr-2">Cancel</button>
+        <button id="confirmBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Okay</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 Doconnect. All rights reserved.</p>
+  </footer>
+  
+  <!-- Embed logged-in user data from the server -->
+  <script>
+    const loggedInUser = <%- JSON.stringify(user) %>;
+    console.log("Logged in user:", loggedInUser);
+  </script>
+  
+  <!-- Scripts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Sidebar toggle functionality (if needed)
+      const menuBtn = document.getElementById("menu-btn");
+      menuBtn.addEventListener("click", function () {
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("hidden");
+      });
+  
+      // Elements for request form and modal
+      const scrollButton = document.getElementById("scrollButton");
+      const requestForm = document.getElementById("requestForm");
+      const requestButton = document.getElementById("requestButton");
+      const confirmationModal = document.getElementById("confirmationModal");
+      const confirmBtn = document.getElementById("confirmBtn");
+      const cancelBtn = document.getElementById("cancelBtn");
+      const documentList = document.getElementById("documentList");
+  
+      // Scroll to request form
+      scrollButton.addEventListener("click", function () {
+        requestForm.classList.remove("hidden");
+        requestForm.scrollIntoView({ behavior: "smooth" });
+      });
+  
+      // Show modal with selected documents
+      requestButton.addEventListener("click", function () {
+    const selectedDocs = Array.from(document.querySelectorAll('input[name="document"]:checked'))
+        .map(input => input.value)
+        .filter(value => value.trim() !== ""); // Ensure empty values are removed
+
+    if (selectedDocs.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Documents Selected',
+            text: 'Please select at least one document.',
+        });
+        return;
+    }
+    showModal(selectedDocs);
+});
+  
+confirmBtn.addEventListener("click", async function () {
+    const selectedDocs = Array.from(document.querySelectorAll('input[name="document"]:checked'))
+        .map(input => input.value)
+        .filter(value => value.trim() !== ""); // Remove empty values
+
+    console.log("Selected documents:", selectedDocs); // Debugging
+
+    if (selectedDocs.length === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No documents selected. Please select at least one document.',
+        });
+        return;
+    }
+
+    const firstname = loggedInUser?.firstname || "Unknown";
+    const lastname = loggedInUser?.lastname || "Unknown";
+
+    try {
+        const requestBody = { 
+            documentType: selectedDocs,  // ✅ Match backend field name
+            firstname, 
+            lastname 
+        };
+
+        console.log("Sending request body:", requestBody); // Debugging
+
+        const response = await fetch('/api/documents/request', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+        });
+
+        const result = await response.json();
+        console.log("Server response:", result); // Debugging
+
+        if (response.ok) {
+            Swal.fire({
+                title: "Request Sent!",
+                text: "Your request has been saved to the database.",
+                icon: "success",
+            });
+        } else {
+            throw new Error(result.message || 'Failed to save request.');
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message,
+        });
+    } finally {
+        confirmationModal.classList.add("hidden");
+    }
+});
+
+
+      // Cancel modal
+      cancelBtn.addEventListener("click", function () {
+        confirmationModal.classList.add("hidden");
+      });
+  
+      // Close modal when clicking outside
+      confirmationModal.addEventListener("click", function (event) {
+        if (event.target === confirmationModal) {
+          confirmationModal.classList.add("hidden");
+        }
+      });
+  
+      function showModal(documents) {
+        documentList.innerHTML = documents.map(doc => `<li>${doc}</li>`).join("");
+        confirmationModal.classList.remove("hidden");
+      }
+    });
+
+    
+  </script>
+</body>
+</html>

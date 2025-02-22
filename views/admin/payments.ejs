@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doconnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    *{
+        font-family: 'Montserrat', sans-serif;
+    }
+    .closed {
+    transform: translateX(-100%);
+}
+
+main {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+
+</style>
+<body class="flex bg-gray-100 h-screen">
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+        <div class="p-6 text-center">
+            <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+            <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+        </div>
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+            <a href="accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+            <a href="announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+            <a href="documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+            <a href="request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+            <a href="messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+            <a href="history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+            <a href="payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+            <a href="admin" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+        </nav>
+    </aside>
+    
+    <!-- Toggle Button -->
+    <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">☰</button>
+
+    <main class="ml-64 flex-1 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Payment Records - Barangay Business Clearance</h2>
+            <div class="flex items-center space-x-4">
+                <input type="text" id="searchInput" placeholder="Search..." class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button class="relative text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-bell text-2xl"></i>
+                    <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full">3</span>
+                </button>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-lg">
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-blue-700 text-white">
+                        <th class="border border-gray-300 p-2">Business Name</th>
+                        <th class="border border-gray-300 p-2">Type of Business</th>
+                        <th class="border border-gray-300 p-2">Request Date</th>
+                        <th class="border border-gray-300 p-2">Status</th>
+                        <th class="border border-gray-300 p-2">Payment</th>
+                        <th class="border border-gray-300 p-2">Business Size</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentRecords">
+                    <tr class="bg-gray-100">
+                        <td class="border border-gray-300 p-2">Ace's Cafe</td>
+                        <td class="border border-gray-300 p-2">Coffee Shop</td>
+                        <td class="border border-gray-300 p-2">2025-02-13</td>
+                        <td class="border border-gray-300 p-2 text-green-600 font-bold">Approved</td>
+                        <td class="border border-gray-300 p-2">₱5,000</td>
+                        <td class="border border-gray-300 p-2">Medium</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">Mark's Auto Repair</td>
+                        <td class="border border-gray-300 p-2">Car Repair Shop</td>
+                        <td class="border border-gray-300 p-2">2025-02-10</td>
+                        <td class="border border-gray-300 p-2 text-yellow-600 font-bold">Pending</td>
+                        <td class="border border-gray-300 p-2">₱7,000</td>
+                        <td class="border border-gray-300 p-2">Large</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+        
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const mainContent = document.querySelector('main');
+    
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('closed');
+    
+        if (sidebar.classList.contains('closed')) {
+            mainContent.classList.remove('ml-64');
+            mainContent.classList.add('ml-0');
+        } else {
+            mainContent.classList.remove('ml-0');
+            mainContent.classList.add('ml-64');
+        }
+    });
+    
+    </script>
+ 
+    </html>

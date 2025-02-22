@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *{
+        font-family: 'Montserrat', sans-serif;
+    }
+    .closed {
+      transform: translateX(-100%);
+    }
+    main {
+      transition: margin-left 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="flex bg-gray-100 h-screen">
+    
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 bg-blue-700 text-white fixed h-screen overflow-y-auto">
+    <div class="p-6 text-center">
+      <img src="../../assets/sanlorenzo.jpg" alt="Logo" class="w-20 h-20 mx-auto rounded-full">
+      <h1 class="text-xl font-semibold mt-2">Doconnect</h1>
+    </div>
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 space-y-2">
+      <a href="dashboard" class="block px-4 py-2 rounded-md hover:bg-blue-600">🏠 Dashboard</a>
+      <a href="accountcreation" class="block px-4 py-2 rounded-md hover:bg-blue-600">📝 Residents</a>
+      <a href="announcement" class="block px-4 py-2 rounded-md hover:bg-blue-600">📢 Announcements</a>
+      <a href="documents" class="block px-4 py-2 rounded-md hover:bg-blue-600">📄 Documents</a>
+      <a href="request" class="block px-4 py-2 rounded-md hover:bg-blue-600">📌 Requests</a>
+      <a href="messages" class="block px-4 py-2 rounded-md hover:bg-blue-600">📨 Messages</a>
+      <a href="history" class="block px-4 py-2 rounded-md hover:bg-blue-600">📜 History</a>
+      <a href="payments" class="block px-4 py-2 rounded-md hover:bg-blue-600">💰 Payment Records</a>
+      <a href="admin" class="block px-4 py-2 rounded-md hover:bg-red-700 mt-4">🚪 Logout</a>
+    </nav>
+  </aside>
+    
+  <!-- Toggle Button -->
+  <button id="toggleSidebar" class="absolute top-4 left-4 bg-blue-700 text-white px-4 py-2 rounded-md z-10">☰</button>
+    
+  <main id="mainContent" class="ml-64 flex-1 p-6 overflow-y-auto h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Announcements</h2>
+    
+      <!-- Upload Form -->
+      <form id="announcementForm" class="mb-6">
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold">Image</label>
+          <input type="file" id="imageUpload" accept="image/*" class="w-full px-3 py-2 border rounded">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold">Title</label>
+          <input type="text" id="title" class="w-full px-3 py-2 border rounded" placeholder="Enter title">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold">Description</label>
+          <textarea id="description" class="w-full px-3 py-2 border rounded" placeholder="Enter description"></textarea>
+        </div>
+        <button type="button" onclick="uploadAnnouncement()" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600">
+          Upload Announcement
+        </button>
+      </form>
+    
+      <!-- Announcements List -->
+      <div id="announcementsList" class="space-y-4">
+        <!-- Announcements will be dynamically added here -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const mainContent = document.getElementById('mainContent');
+  
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('closed');
+      mainContent.classList.toggle('ml-64');
+      mainContent.classList.toggle('ml-0');
+    });
+  
+    document.addEventListener('DOMContentLoaded', fetchAnnouncements);
+  
+    function uploadAnnouncement() {
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const imageUpload = document.getElementById('imageUpload');
+  
+      if (!title || !description || !imageUpload.files.length) {
+        Swal.fire('Incomplete!', 'Please complete all fields.', 'warning');
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+        announcements.push({ title, description, image: e.target.result });
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+  
+        Swal.fire('Success!', 'Announcement uploaded.', 'success');
+        fetchAnnouncements();
+        document.getElementById('announcementForm').reset();
+      };
+      reader.readAsDataURL(imageUpload.files[0]);
+    }
+  
+    function fetchAnnouncements() {
+      const announcementsList = document.getElementById('announcementsList');
+      announcementsList.innerHTML = '';
+      const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+  
+      announcements.forEach(({ title, description, image }, index) => {
+        announcementsList.innerHTML += `
+          <div class="bg-gray-100 p-4 rounded shadow-md flex items-start space-x-4">
+            <img src="${image}" class="w-24 h-24 object-cover rounded">
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold">${title}</h3>
+              <p class="text-gray-700">${description}</p>
+            </div>
+            <div class="space-x-2">
+              <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600" onclick="editAnnouncement(${index})">✏️ Edit</button>
+              <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onclick="deleteAnnouncement(${index})">🗑️ Delete</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+  
+    function editAnnouncement(index) {
+      const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+      const { title, description } = announcements[index];
+  
+      Swal.fire({
+        title: 'Edit Announcement',
+        html: `
+          <input id="swal-title" class="swal2-input" placeholder="Title" value="${title}">
+          <textarea id="swal-description" class="swal2-textarea" placeholder="Description">${description}</textarea>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        cancelButtonText: 'Cancel',
+        preConfirm: () => {
+          const newTitle = document.getElementById('swal-title').value.trim();
+          const newDescription = document.getElementById('swal-description').value.trim();
+  
+          if (!newTitle || !newDescription) {
+            Swal.showValidationMessage('Both fields are required.');
+          }
+          return { newTitle, newDescription };
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          announcements[index].title = result.value.newTitle;
+          announcements[index].description = result.value.newDescription;
+          localStorage.setItem('announcements', JSON.stringify(announcements));
+          Swal.fire('Saved!', 'Announcement updated.', 'success');
+          fetchAnnouncements();
+        }
+      });
+    }
+  
+    function deleteAnnouncement(index) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'This will permanently delete the announcement.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+          announcements.splice(index, 1);
+          localStorage.setItem('announcements', JSON.stringify(announcements));
+          Swal.fire('Deleted!', 'Announcement removed.', 'success');
+          fetchAnnouncements();
+        }
+      });
+    }
+  </script>
+  
+</body>
+</html>

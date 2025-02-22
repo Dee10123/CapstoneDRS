@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doconnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    *{
+        font-family: 'Montserrat', sans-serif;
+    }
+</style>
+     
+</head>
+<body class=" bg-gray-100 ">
+    <nav class="bg-white shadow-md">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center space-x-4">
+                <img src="/assets/sanlorenzo.jpg" alt="Logo" class="h-16">
+                <span class="text-sm font-bold text-gray-800">BARANGAY <br>SAN LORENZO</span>
+            </div>
+            <!-- Navigation Links -->
+            <ul class="hidden md:flex space-x-8 font-medium text-gray-700 items-center">
+                <li><a href="index" class="relative hover:text-blue-600 transition" id="home-link">HOME</a></li>
+                <li><a href="about" class="relative hover:text-blue-600 transition" id="about-link">ABOUT US</a></li>
+                <li><a href="faq" class="relative hover:text-blue-600 transition" id="faq-link">FAQ</a></li>
+                <li><a href="contact" class="relative hover:text-blue-600 transition" id="contact-link">CONTACT US</a></li>
+                <i class="fa-solid fa-bell fa-xl"></i>
+            
+                <a href="profile">    <i class="fa-solid fa-user fa-xl"></i></a>
+                <button onclick="window.location.href='/login'">Logout</button>
+            </ul>
+    
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-gray-700 text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <ul class="flex flex-col space-y-3 p-4">
+                <li><a href="home.html" class="block text-gray-700 hover:text-blue-600">HOME</a></li>
+                <li><a href="about.html" class="block text-gray-700 hover:text-blue-600">ABOUT US</a></li>
+                <li><a href="contact.html" class="block text-gray-700 hover:text-blue-600">CONTACT US</a></li>
+                <li><a href="faq.html" class="block text-gray-700 hover:text-blue-600">FAQ</a></li>
+                <i class="fa-solid fa-bell "></i>
+                <i class="fa-solid fa-user fa-2xl"></i>
+            </ul>
+        </div>
+    </nav>
+    <section class=" py-16">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
+            <!-- Illustration -->
+            <div class="md:w-1/2">
+                <img src="../../assets/question.png" alt="FAQ Illustration" class="w-full rounded-full">
+            </div>
+    
+            <!-- FAQ Section -->
+            <div class="md:w-1/2 bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-blue-600 mb-6">FAQ</h2>
+    
+                <div class="space-y-4">
+                    <div class="border-b border-gray-300 pb-2">
+                        <button class="faq-btn w-full flex justify-between text-gray-800 font-semibold text-lg">
+                            What services does Doconnect offer?
+                            <span class="icon">+</span>
+                        </button>
+                        <p class="faq-content hidden text-gray-600 mt-2">Doconnect provides seamless online document request services, ensuring fast and secure transactions.</p>
+                    </div>
+    
+                    <div class="border-b border-gray-300 pb-2">
+                        <button class="faq-btn w-full flex justify-between text-gray-800 font-semibold text-lg">
+                            How long does it take to process a request?
+                            <span class="icon">+</span>
+                        </button>
+                        <p class="faq-content hidden text-gray-600 mt-2">Processing time depends on the document type. Most requests are completed within 1-3 business days.</p>
+                    </div>
+    
+                    <div class="border-b border-gray-300 pb-2">
+                        <button class="faq-btn w-full flex justify-between text-gray-800 font-semibold text-lg">
+                            Is there a service fee for requesting documents?
+                            <span class="icon">+</span>
+                        </button>
+                        <p class="faq-content hidden text-gray-600 mt-2">Yes, minimal service fees apply depending on the document. You will see the exact fee before submitting your request.</p>
+                    </div>
+    
+                    <div class="border-b border-gray-300 pb-2">
+                        <button class="faq-btn w-full flex justify-between text-gray-800 font-semibold text-lg">
+                            How can I track my request?
+                            <span class="icon">+</span>
+                        </button>
+                        <p class="faq-content hidden text-gray-600 mt-2">You can track your request in your dashboard under the ‘My Requests’ section.</p>
+                    </div>
+    
+                    <div class="border-b border-gray-300 pb-2">
+                        <button class="faq-btn w-full flex justify-between text-gray-800 font-semibold text-lg">
+                            What should I do if I encounter issues?
+                            <span class="icon">+</span>
+                        </button>
+                        <p class="faq-content hidden text-gray-600 mt-2">You can contact our support team via email or our contact page for assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <section class="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg text-center mt-20">
+        <h2 class="text-3xl font-bold text-blue-600 mb-6">Rate Our Service</h2>
+        <div class="flex justify-center space-x-3 mb-4">
+            <span class="text-gray-400 text-6xl cursor-pointer star" data-value="1">&#9733;</span>
+            <span class="text-gray-400 text-6xl cursor-pointer star" data-value="2">&#9733;</span>
+            <span class="text-gray-400 text-6xl cursor-pointer star" data-value="3">&#9733;</span>
+            <span class="text-gray-400 text-6xl cursor-pointer star" data-value="4">&#9733;</span>
+            <span class="text-gray-400 text-6xl cursor-pointer star" data-value="5">&#9733;</span>
+        </div>
+        <button id="submitBtn" class="mt-4 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition">Submit</button>
+    </section>
+
+    
+    <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+        <p>&copy; 2025 Doconnect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("scrollButton").addEventListener("click", function() {
+            document.getElementById("requestForm").classList.remove("hidden");
+            document.getElementById("requestForm").scrollIntoView({ behavior: "smooth" });
+        });
+
+        document.getElementById("requestButton").addEventListener("click", function() {
+            document.getElementById("confirmationModal").classList.remove("hidden");
+        });
+
+        document.getElementById("cancelButton").addEventListener("click", function() {
+            document.getElementById("confirmationModal").classList.add("hidden");
+        });
+    </script>
+        <script>
+            document.querySelectorAll(".faq-btn").forEach(button => {
+                button.addEventListener("click", () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector(".icon");
+        
+                    if (content.classList.contains("hidden")) {
+                        document.querySelectorAll(".faq-content").forEach(item => item.classList.add("hidden"));
+                        document.querySelectorAll(".icon").forEach(i => i.textContent = "+");
+        
+                        content.classList.remove("hidden");
+                        icon.textContent = "-";
+                    } else {
+                        content.classList.add("hidden");
+                        icon.textContent = "+";
+                    }
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const stars = document.querySelectorAll(".star");
+                const submitBtn = document.getElementById("submitBtn");
+                let selectedRating = 0;
+    
+                stars.forEach(star => {
+                    star.addEventListener("mouseover", function() {
+                        let value = this.getAttribute("data-value");
+                        highlightStars(value);
+                    });
+    
+                    star.addEventListener("click", function() {
+                        selectedRating = this.getAttribute("data-value");
+                        highlightStars(selectedRating);
+                    });
+    
+                    star.addEventListener("mouseleave", function() {
+                        highlightStars(selectedRating);
+                    });
+                });
+    
+                function highlightStars(value) {
+                    stars.forEach(star => {
+                        if (star.getAttribute("data-value") <= value) {
+                            star.classList.add("text-yellow-400");
+                            star.classList.remove("text-gray-400");
+                        } else {
+                            star.classList.add("text-gray-400");
+                            star.classList.remove("text-yellow-400");
+                        }
+                    });
+                }
+    
+                submitBtn.addEventListener("click", function() {
+                    if (selectedRating > 0) {
+                        Swal.fire({
+                            title: "Thank you!",
+                            text: "Your rating: " + selectedRating + " stars",
+                            icon: "success",
+                            confirmButtonColor: "#3085d6"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Oops!",
+                            text: "Please select a star rating before submitting.",
+                            icon: "warning",
+                            confirmButtonColor: "#d33"
+                        });
+                    }
+                });
+            });
+        </script>
+</body>
+</html>

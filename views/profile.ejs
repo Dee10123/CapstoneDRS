@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doconnect - Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/aed89df169.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * {
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center space-x-4">
+        <img src="/assets/sanlorenzo.jpg" alt="Logo" class="h-16">
+        <span class="text-sm font-bold text-gray-800">BARANGAY <br>SAN LORENZO</span>
+      </div>
+      <!-- Navigation Links -->
+      <ul class="hidden md:flex space-x-8 font-medium text-gray-700 items-center">
+        <li><a href="/index" class="relative hover:text-blue-600 transition" id="home-link">HOME</a></li>
+        <li><a href="/about" class="relative hover:text-blue-600 transition" id="about-link">ABOUT US</a></li>
+        <li><a href="/faq" class="relative hover:text-blue-600 transition" id="faq-link">FAQ</a></li>
+        <li><a href="/contact" class="relative hover:text-blue-600 transition" id="contact-link">CONTACT US</a></li>
+        <i class="fa-solid fa-bell fa-xl"></i>
+        <a href="/profile"><i class="fa-solid fa-user fa-xl"></i></a>
+        
+      </ul>
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-gray-700 text-2xl">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <ul class="flex flex-col space-y-3 p-4">
+        <li><a href="/index" class="block text-gray-700 hover:text-blue-600">HOME</a></li>
+        <li><a href="/about" class="block text-gray-700 hover:text-blue-600">ABOUT US</a></li>
+        <li><a href="/contact" class="block text-gray-700 hover:text-blue-600">CONTACT US</a></li>
+        <li><a href="/faq" class="block text-gray-700 hover:text-blue-600">FAQ</a></li>
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-user fa-2xl"></i>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Left Side: History & Status (25%) -->
+    <div class="md:col-span-1 space-y-6">
+      <!-- History Section -->
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-4">History</h2>
+        <ul id="historyList" class="space-y-3 border-l-4 border-blue-400 pl-4">
+          <!-- Halimbawa: static muna. Maaari mo itong gawing dynamic kung mayroon ka nang history logs -->
+          <li class="text-gray-700">
+            <i class="fa-solid fa-file-lines text-gray-600"></i>
+            Requested Barangay Clearance 
+            <span class="block text-gray-500 text-sm">January 10, 2025</span>
+          </li>
+          <li class="text-gray-700">
+            <i class="fa-solid fa-user-pen text-gray-600"></i>
+            Updated Profile Information 
+            <span class="block text-gray-500 text-sm">February 1, 2025</span>
+          </li>
+        </ul>
+      </div>
+      <!-- Status Section -->
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-4">Status</h2>
+        <p>Your last request is 
+          <span class="font-semibold bg-green-100 text-green-600 px-3 py-1 rounded-lg">Approved</span>.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Right Side: Edit Profile (75%) -->
+    <div class="md:col-span-3 bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Edit Profile</h2>
+      <form action="/profile/edit" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <!-- Profile Picture Upload Section -->
+        <div class="flex flex-col items-center space-y-4">
+          <div id="profilePicContainer" class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-gray-300 flex items-center justify-center bg-gray-100 cursor-pointer">
+            <% if (user.profilePic) { %>
+              <img id="profilePic" src="/uploads/<%= user.profilePic %>" alt="Profile Picture" class="w-full h-full object-cover" />
+            <% } else { %>
+              <span id="uploadText" class="text-gray-500">Upload</span>
+            <% } %>
+            <input type="file" id="profileInput" name="profilePic" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*">
+          </div>
+        </div>
+                        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-700 font-medium">First Name</label>
+            <input type="text" name="firstname" value="<%= user.firstname %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter your first name" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium">Last Name</label>
+            <input type="text" name="lastname" value="<%= user.lastname %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter your last name" required>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-gray-700 font-medium">Birthday</label>
+            <input type="date" name="birthday" value="<%= user.birthday ? new Date(user.birthday).toISOString().split('T')[0] : '' %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium">Age</label>
+            <input type="number" name="age" value="<%= user.age %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter your age" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium">Contact Number</label>
+            <input type="text" name="mobile" value="<%= user.mobile %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter your contact number" required>
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium">Address</label>
+          <input type="text" name="address" value="<%= user.address %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter your address" required>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium">Email</label>
+          <input type="email" name="email" value="<%= user.email %>" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter your email" required>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium">Password</label>
+          <input type="password" name="password" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Enter new password">
+        </div>
+        
+        <div class="flex justify-between">
+          <button type="submit" class="px-5 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Scripts for Mobile Menu and Profile Picture Upload -->
+  <script>
+    // Mobile menu toggle
+    document.getElementById("menu-btn").addEventListener("click", function() {
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    const profilePicContainer = document.getElementById("profilePicContainer");
+    const profilePic = document.getElementById("profilePic");
+    const uploadText = document.getElementById("uploadText");
+    const profileInput = document.getElementById("profileInput");
+
+    // Drag-and-Drop Event Listeners
+    profilePicContainer.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      profilePicContainer.classList.add("border-blue-500");
+    });
+
+    profilePicContainer.addEventListener("dragleave", () => {
+      profilePicContainer.classList.remove("border-blue-500");
+    });
+
+    profilePicContainer.addEventListener("drop", (e) => {
+      e.preventDefault();
+      profilePicContainer.classList.remove("border-blue-500");
+      const file = e.dataTransfer.files[0];
+      handleImageUpload(file);
+    });
+
+    // Click-to-Upload
+    profileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      handleImageUpload(file);
+    });
+
+    function handleImageUpload(file) {
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          profilePic.src = event.target.result;
+          profilePic.classList.remove("hidden");
+          if (uploadText) {
+            uploadText.classList.add("hidden");
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>
